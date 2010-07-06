@@ -8,8 +8,8 @@ using System.Text.RegularExpressions;
 public class I18nEditor : EditorWindow
 {
 	public static string LOCALIZATION_DIR=I18n.ABSOLUTE_LOCALIZATION_DIR;
-	const string  METHOD_LOCALE="Locale.GetText";
-	//const string  METHDO_LOCALE="I18nUtil.GetText";
+	//const string  METHOD_LOCALE="Locale.GetText";
+	const string  METHDO_LOCALE="I18nUtil.GetText";
 	public static I18nEditor window;
 	private I18nReader _reader;
 	private I18nWriter _writer;
