@@ -84,13 +84,13 @@ public class I18nReader
 				break;
 			
 			case LineType.MSGID_LINE:
-				po.msgid = line.Replace ("msgid ", string.Empty);
-				po.msgid = po.msgid.Replace ("\"", string.Empty);
+				po.msgid = line.Replace ("msgid ", string.Empty).Replace ("\"",string.Empty);
+				
 				break;
 			
 			case LineType.MSGSTR_LINE:
-				po.msgstr = line.Replace ("msgstr ", string.Empty);
-				po.msgstr = po.msgstr.Replace("\"",string.Empty);
+				po.msgstr = line.Replace ("msgstr ", string.Empty).Replace("\"",string.Empty);
+				
 				AddI18nItem(po);
 				break;
 			default:
@@ -111,12 +111,21 @@ public class I18nReader
 
 	public string GetText (string key)
 	{
-		return ContainsKey (key) ? _table[key].msgstr : "Not exist in this language";
+		return ContainsKey (key) ? _table[key].msgstr.Replace("<br/>","\n") : "Not exist in this language";
 	}
 
 	public Dictionary<string, I18nItem> GetTable ()
 	{
 		return _table;
+	}
+	
+	public Dictionary<string,string> GetTable(bool returnStringTable){
+	  Dictionary<string,string> _newTable=new Dictionary<string, string>();
+	  foreach(KeyValuePair<string,I18nItem> item in  _table ){
+	  	 _newTable[item.Key]=item.Value.msgstr;
+	  }
+	  return  _newTable;
+	  
 	}
 	
 	public static Dictionary<string, I18nItem> ParseValues(FileStream file){

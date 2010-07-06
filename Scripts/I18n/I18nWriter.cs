@@ -24,11 +24,11 @@ public class I18nWriter
 		TextWriter tw = new StreamWriter (_file, Encoding.UTF8);
 		StringBuilder st = new StringBuilder ();
 		foreach (KeyValuePair<string, I18nItem> item in _table) {
-			st.Append ("\n");
+			st.Append("\n");
 			st.Append ("#: " + item.Value.file + ":" + item.Value.line + "\n");
-			st.Append ("msgid " + item.Value.msgid + "\n");
-			st.Append ("msgstr " + item.Value.msgstr + "\n");
-			
+			st.Append ("msgid \""+ item.Value.msgid + "\"\n");
+			st.Append ("msgstr \"" + item.Value.msgstr + "\"");
+			st.Append("\n");
 		}
 		tw.Write (st.ToString ());
 		tw.Close ();

@@ -8,6 +8,8 @@ using System.Text.RegularExpressions;
 public class I18nEditor : EditorWindow
 {
 	public static string LOCALIZATION_DIR=I18n.ABSOLUTE_LOCALIZATION_DIR;
+	const string  METHOD_LOCALE="Locale.GetText";
+	//const string  METHDO_LOCALE="I18nUtil.GetText";
 	public static I18nEditor window;
 	private I18nReader _reader;
 	private I18nWriter _writer;
@@ -23,11 +25,7 @@ public class I18nEditor : EditorWindow
 		window.Show ();
 	}
 	
-	[MenuItem("Utils/Internacinalization/Generate")]
-	static void Generate(){
-	   //LoadFile ();
-	   
-	}
+	
 	
 	public string LANGUAGE_FILE{
 		get{
@@ -97,17 +95,23 @@ public class I18nEditor : EditorWindow
 				string line = "";
 				int counter = 0;
 				while ((line = st.ReadLine ()) != null) {
-					if (line.IndexOf ("I18nUtil.GetValue") > -1) {						
-						line = line.Remove (0, line.IndexOf ("I18nUtil.GetValue") + 1);
+					if (line.IndexOf (METHOD_LOCALE) > -1) {						
+						line = line.Remove (0, line.IndexOf (METHOD_LOCALE) + 1);
 						Match results = Regex.Match(line,"\"[^\"]+\"");
 						I18nItem po = new I18nItem ();
+						string id=results.Captures[0].Value.Replace("\"",string.Empty);
+						
 						po.file = reference.FullName;
 						po.line = counter.ToString();
-						po.msgid = results.Captures[0].Value;
-						po.msgstr="\"\"";						
+						po.msgid = id;
+						
+						po.msgstr=string.Empty;						
 						if(!_table.ContainsKey(po.msgid)){
 							_table[po.msgid] = po;
+						}else{
+						   po.line=", "+po.line;
 						}
+						
 					}
 					counter++;
 				}
