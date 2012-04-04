@@ -1,4 +1,0 @@
-
-#: /Users/gabrielcaires/LocaleText/Assets/Scripts/TestLocale.cs:9
-msgid "congratulations"
-msgstr ""
